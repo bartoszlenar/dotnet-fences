@@ -6,13 +6,9 @@
     "build": {
       "type": "object",
       "properties": {
-        "Configuration": {
-          "type": "string",
-          "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
-          "enum": [
-            "Debug",
-            "Release"
-          ]
+        "AllowWarnings": {
+          "type": "boolean",
+          "description": "Allows warning during the build. Default is false. Set to true to stop the warnings from breaking the build"
         },
         "Continue": {
           "type": "boolean",
@@ -73,8 +69,11 @@
             "type": "string",
             "enum": [
               "Clean",
-              "Compile",
-              "Restore"
+              "CleanAll",
+              "CompileForPack",
+              "CompileForTest",
+              "Pack",
+              "Test"
             ]
           }
         },
@@ -85,8 +84,11 @@
             "type": "string",
             "enum": [
               "Clean",
-              "Compile",
-              "Restore"
+              "CleanAll",
+              "CompileForPack",
+              "CompileForTest",
+              "Pack",
+              "Test"
             ]
           }
         },
@@ -99,6 +101,10 @@
             "Quiet",
             "Verbose"
           ]
+        },
+        "Version": {
+          "type": "string",
+          "description": "Version. If not provided it will be generated automatically as 0.0.0-timestamp"
         }
       }
     }
