@@ -1,14 +1,16 @@
+using FluentAssertions;
+
 namespace fences.Tests;
 
 public class TestLogicTests
 {
-    [Fact(DisplayName = "XXX IsEven should return true for even numbers")]
+    [Fact(DisplayName = "IsEven should return true for even numbers")]
 
-    public void IsEvent()
+    public void IsEven()
     {
         var logic = new TestLogic();
-        Assert.True(logic.IsEven(2));
-        Assert.True(logic.IsEven(4));
-        Assert.True(logic.IsEven(6));
+        logic.IsEven(2).Should().BeTrue();
+        logic.IsEven(4).Should().BeTrue();
+        logic.IsEven(6).Should().BeTrue();
     }
 }
