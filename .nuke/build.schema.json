@@ -10,6 +10,10 @@
           "type": "boolean",
           "description": "Allows warning during the build. Default is false. Set to true to stop the warnings from breaking the build"
         },
+        "CommitSha": {
+          "type": "string",
+          "description": "Commit SHA"
+        },
         "Continue": {
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
@@ -43,6 +47,10 @@
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
         },
+        "OpenResults": {
+          "type": "boolean",
+          "description": "Some targets try to show you their results just after they finish (like opening the coverage report in the browser). Set to true to enable this feature. Default is false"
+        },
         "Partition": {
           "type": "string",
           "description": "Partition to use on CI"
@@ -70,8 +78,9 @@
             "enum": [
               "Clean",
               "CleanAll",
-              "CompileForPack",
-              "CompileForTest",
+              "CompileForDebug",
+              "CompileForRelease",
+              "CoverageReport",
               "Pack",
               "Test"
             ]
@@ -85,8 +94,9 @@
             "enum": [
               "Clean",
               "CleanAll",
-              "CompileForPack",
-              "CompileForTest",
+              "CompileForDebug",
+              "CompileForRelease",
+              "CoverageReport",
               "Pack",
               "Test"
             ]
