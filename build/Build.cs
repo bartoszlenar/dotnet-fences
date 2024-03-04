@@ -53,6 +53,21 @@ class Build : NukeBuild
         Serilog.Log.Information($"Version: {Version}");
     }
 
+    Target Lock => _ => _
+        .Description("Restore and re-lock the dependencies.")
+        .DependsOn(Clean)
+        .Executes(() =>
+        {
+            new[] { FenceProjectFilePath, FenceTestProjectFilePath, }.ForEach(path =>
+            {
+                DotNetRestore(s => s
+                    .SetLockedMode(false)
+                    .SetForceEvaluate(true)
+                    .SetProjectFile(path)
+                );
+            });
+        });
+
     Target CleanAll => _ => _
         .Description("Clean all generated directories (artifacts, tools, builds, temps, etc.)")
         .Executes(() =>
@@ -71,7 +86,12 @@ class Build : NukeBuild
     Target CompileForRelease => _ => _
         .Executes(() =>
         {
+            DotNetRestore(s => s
+                .SetProjectFile(FenceProjectFilePath)
+                .SetLockedMode(true));
+
             DotNetBuild(s => s
+                .EnableNoRestore()
                 .SetConfiguration(Configuration.Release)
                 .SetProjectFile(FenceProjectFilePath)
                 .SetTreatWarningsAsErrors(true)
@@ -95,17 +115,22 @@ class Build : NukeBuild
         });
 
     Target CompileForDebug => _ => _
-       .Executes(() =>
-       {
-           new[] { FenceProjectFilePath, FenceTestProjectFilePath }.ForEach(path =>
-           {
-               DotNetBuild(s => s
-                   .SetConfiguration(Configuration.Debug)
-                   .SetProjectFile(path)
-                   .SetTreatWarningsAsErrors(!AllowWarnings));
-           });
-       })
-       .Unlisted();
+        .Executes(() =>
+        {
+            new[] { FenceProjectFilePath, FenceTestProjectFilePath }.ForEach(path =>
+            {
+                DotNetRestore(s => s
+                    .SetProjectFile(path)
+                    .SetLockedMode(true));
+
+                DotNetBuild(s => s
+                        .EnableNoRestore()
+                        .SetConfiguration(Configuration.Debug)
+                        .SetProjectFile(path)
+                        .SetTreatWarningsAsErrors(!AllowWarnings));
+            });
+        })
+        .Unlisted();
 
     Target Test => _ => _
         .DependsOn(CompileForDebug)

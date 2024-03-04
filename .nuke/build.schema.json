@@ -81,6 +81,7 @@
               "CompileForDebug",
               "CompileForRelease",
               "CoverageReport",
+              "Lock",
               "Pack",
               "Test"
             ]
@@ -97,6 +98,7 @@
               "CompileForDebug",
               "CompileForRelease",
               "CoverageReport",
+              "Lock",
               "Pack",
               "Test"
             ]
