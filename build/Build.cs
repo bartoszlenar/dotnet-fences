@@ -40,6 +40,8 @@ class Build : NukeBuild
 
     [Parameter($"Some targets try to show you their results just after they finish (like opening the coverage report in the browser). Set to true to enable this feature. Default is false.")]
     readonly bool OpenResults = false;
+    [Parameter($"Open the results automatically after work is completed (e.g., CoverageReport opens the final report in the browser). Default is false.")]
+    readonly bool Open = false;
 
     [Parameter("Commit SHA")]
     readonly string? CommitSha;
@@ -131,7 +133,7 @@ class Build : NukeBuild
             coverageFile.MoveToDirectory(TestArtifactsDirectory);
             coverageFile.Parent.DeleteDirectory();
 
-            if (OpenResults)
+            if (Open)
             {
                 TestArtifactsDirectory.Open();
             }
@@ -162,7 +164,7 @@ class Build : NukeBuild
 
             ExecuteTool(tool, toolParameters.Select(p => $"\"{p}\"").JoinSpace());
 
-            if (OpenResults)
+            if (Open)
             {
                 Serilog.Log.Information($"Report generated in {coverageReportDirectory} and will be opened in the browser.");
                 (coverageReportDirectory / "index.html").Open();
