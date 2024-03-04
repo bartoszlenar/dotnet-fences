@@ -36,10 +36,8 @@ class Build : NukeBuild
     readonly bool AllowWarnings;
 
     [Parameter("Version. If not provided it will be generated automatically as 0.0.0-timestamp")]
-    string? Version;
+    string Version = null!;
 
-    [Parameter($"Some targets try to show you their results just after they finish (like opening the coverage report in the browser). Set to true to enable this feature. Default is false.")]
-    readonly bool OpenResults = false;
     [Parameter($"Open the results automatically after work is completed (e.g., CoverageReport opens the final report in the browser). Default is false.")]
     readonly bool Open = false;
 
@@ -76,7 +74,8 @@ class Build : NukeBuild
             DotNetBuild(s => s
                 .SetConfiguration(Configuration.Release)
                 .SetProjectFile(FenceProjectFilePath)
-                .SetTreatWarningsAsErrors(true));
+                .SetTreatWarningsAsErrors(true)
+                .SetVersion(Version));
         })
         .Unlisted();
 
@@ -91,6 +90,7 @@ class Build : NukeBuild
                 .SetProject(FenceProjectFilePath)
                 .SetOutputDirectory(BuildArtifactsDirectory)
                 .SetVersion(Version)
+                .SetProperty("PackageVersion", Version)
             );
         });
 
@@ -140,7 +140,7 @@ class Build : NukeBuild
         });
 
     Target CoverageReport => _ => _
-        .Description("Generates the human-readable coverage report and opens it in the browser.")
+        .Description("Generates the human-readable coverage report.")
         .DependsOn(Test)
         .Executes(() =>
         {
@@ -153,7 +153,7 @@ class Build : NukeBuild
             var toolParameters = new[]
             {
                 $"-reports:{coverageFile}",
-                $"-reporttypes:HTML;JsonSummary",
+                $"-reporttypes:HtmlInline_AzurePipelines;JsonSummary",
                 $"-targetdir:{coverageReportDirectory}",
                 $"-historydir:{coverageReportHistoryDirectory}",
                 $"-title:dotnet-fences unit tests code coverage report",
