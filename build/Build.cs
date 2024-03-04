@@ -36,10 +36,10 @@ class Build : NukeBuild
     readonly bool AllowWarnings;
 
     [Parameter("Version. If not provided it will be generated automatically as 0.0.0-timestamp")]
-    string? Version;
+    string Version = null!;
 
-    [Parameter($"Some targets try to show you their results just after they finish (like opening the coverage report in the browser). Set to true to enable this feature. Default is false.")]
-    readonly bool OpenResults = false;
+    [Parameter($"Open the results automatically after work is completed (e.g., CoverageReport opens the final report in the browser). Default is false.")]
+    readonly bool Open = false;
 
     [Parameter("Commit SHA")]
     readonly string? CommitSha;
@@ -52,6 +52,21 @@ class Build : NukeBuild
 
         Serilog.Log.Information($"Version: {Version}");
     }
+
+    Target Lock => _ => _
+        .Description("Restore and re-lock the dependencies.")
+        .DependsOn(Clean)
+        .Executes(() =>
+        {
+            new[] { FenceProjectFilePath, FenceTestProjectFilePath, }.ForEach(path =>
+            {
+                DotNetRestore(s => s
+                    .SetLockedMode(false)
+                    .SetForceEvaluate(true)
+                    .SetProjectFile(path)
+                );
+            });
+        });
 
     Target CleanAll => _ => _
         .Description("Clean all generated directories (artifacts, tools, builds, temps, etc.)")
@@ -71,10 +86,16 @@ class Build : NukeBuild
     Target CompileForRelease => _ => _
         .Executes(() =>
         {
+            DotNetRestore(s => s
+                .SetProjectFile(FenceProjectFilePath)
+                .SetLockedMode(true));
+
             DotNetBuild(s => s
+                .EnableNoRestore()
                 .SetConfiguration(Configuration.Release)
                 .SetProjectFile(FenceProjectFilePath)
-                .SetTreatWarningsAsErrors(true));
+                .SetTreatWarningsAsErrors(true)
+                .SetVersion(Version));
         })
         .Unlisted();
 
@@ -89,21 +110,27 @@ class Build : NukeBuild
                 .SetProject(FenceProjectFilePath)
                 .SetOutputDirectory(BuildArtifactsDirectory)
                 .SetVersion(Version)
+                .SetProperty("PackageVersion", Version)
             );
         });
 
     Target CompileForDebug => _ => _
-       .Executes(() =>
-       {
-           new[] { FenceProjectFilePath, FenceTestProjectFilePath }.ForEach(path =>
-           {
-               DotNetBuild(s => s
-                   .SetConfiguration(Configuration.Debug)
-                   .SetProjectFile(path)
-                   .SetTreatWarningsAsErrors(!AllowWarnings));
-           });
-       })
-       .Unlisted();
+        .Executes(() =>
+        {
+            new[] { FenceProjectFilePath, FenceTestProjectFilePath }.ForEach(path =>
+            {
+                DotNetRestore(s => s
+                    .SetProjectFile(path)
+                    .SetLockedMode(true));
+
+                DotNetBuild(s => s
+                        .EnableNoRestore()
+                        .SetConfiguration(Configuration.Debug)
+                        .SetProjectFile(path)
+                        .SetTreatWarningsAsErrors(!AllowWarnings));
+            });
+        })
+        .Unlisted();
 
     Target Test => _ => _
         .DependsOn(CompileForDebug)
@@ -131,14 +158,14 @@ class Build : NukeBuild
             coverageFile.MoveToDirectory(TestArtifactsDirectory);
             coverageFile.Parent.DeleteDirectory();
 
-            if (OpenResults)
+            if (Open)
             {
                 TestArtifactsDirectory.Open();
             }
         });
 
     Target CoverageReport => _ => _
-        .Description("Generates the human-readable coverage report and opens it in the browser.")
+        .Description("Generates the human-readable coverage report.")
         .DependsOn(Test)
         .Executes(() =>
         {
@@ -151,7 +178,7 @@ class Build : NukeBuild
             var toolParameters = new[]
             {
                 $"-reports:{coverageFile}",
-                $"-reporttypes:HTML;JsonSummary",
+                $"-reporttypes:HtmlInline_AzurePipelines;JsonSummary",
                 $"-targetdir:{coverageReportDirectory}",
                 $"-historydir:{coverageReportHistoryDirectory}",
                 $"-title:dotnet-fences unit tests code coverage report",
@@ -162,7 +189,7 @@ class Build : NukeBuild
 
             ExecuteTool(tool, toolParameters.Select(p => $"\"{p}\"").JoinSpace());
 
-            if (OpenResults)
+            if (Open)
             {
                 Serilog.Log.Information($"Report generated in {coverageReportDirectory} and will be opened in the browser.");
                 (coverageReportDirectory / "index.html").Open();
