@@ -76,10 +76,10 @@
           "items": {
             "type": "string",
             "enum": [
+              "BuildDebug",
+              "BuildRelease",
               "Clean",
               "CleanAll",
-              "CompileForDebug",
-              "CompileForRelease",
               "CoverageReport",
               "Lock",
               "Pack",
@@ -93,10 +93,10 @@
           "items": {
             "type": "string",
             "enum": [
+              "BuildDebug",
+              "BuildRelease",
               "Clean",
               "CleanAll",
-              "CompileForDebug",
-              "CompileForRelease",
               "CoverageReport",
               "Lock",
               "Pack",
