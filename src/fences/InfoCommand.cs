@@ -6,10 +6,13 @@ namespace fences;
 
 class InfoCommand : Command
 {
-
     public override int Execute(CommandContext context)
     {
-        AnsiConsole.Write(new FigletText(typeof(Program).Assembly.GetName().Name!).LeftJustified());
+        var programInfo = ProgramInfo.FromAssembly(Assembly.GetExecutingAssembly());
+
+        AnsiConsole.Write(new FigletText(programInfo.Name).LeftJustified());
+        AnsiConsole.WriteLine("version: " + programInfo.Version);
+        AnsiConsole.WriteLine("commit: " + programInfo.Commit);
 
         return 0;
     }
