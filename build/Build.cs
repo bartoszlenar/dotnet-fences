@@ -109,7 +109,6 @@ class Build : NukeBuild
                 .EnableNoBuild()
                 .SetProject(FenceProjectFilePath)
                 .SetOutputDirectory(BuildArtifactsDirectory)
-                .SetVersion(Version)
                 .SetProperty("PackageVersion", Version)
             );
         });
