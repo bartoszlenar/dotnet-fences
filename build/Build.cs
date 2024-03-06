@@ -22,7 +22,7 @@ class Build : NukeBuild
 {
     static readonly DateTimeOffset BuildTime = DateTimeOffset.UtcNow;
 
-    public static int Main() => Execute<Build>(x => x.CompileForRelease);
+    public static int Main() => Execute<Build>(x => x.BuildRelease);
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath FenceProjectFilePath => SourceDirectory / "fences" / "fences.csproj";
@@ -83,7 +83,7 @@ class Build : NukeBuild
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(dir => dir.DeleteDirectory());
         });
 
-    Target CompileForRelease => _ => _
+    Target BuildRelease => _ => _
         .Executes(() =>
         {
             DotNetRestore(s => s
@@ -101,7 +101,7 @@ class Build : NukeBuild
 
     Target Pack => _ => _
         .Description("Packs the project into a nuget package.")
-        .DependsOn(CompileForRelease)
+        .DependsOn(BuildRelease)
         .Executes(() =>
         {
             DotNetPack(s => s
@@ -113,7 +113,7 @@ class Build : NukeBuild
             );
         });
 
-    Target CompileForDebug => _ => _
+    Target BuildDebug => _ => _
         .Executes(() =>
         {
             new[] { FenceProjectFilePath, FenceTestProjectFilePath }.ForEach(path =>
@@ -132,7 +132,7 @@ class Build : NukeBuild
         .Unlisted();
 
     Target Test => _ => _
-        .DependsOn(CompileForDebug)
+        .DependsOn(BuildDebug)
         .Executes(() =>
         {
             DotNetTest(p => p
