@@ -3,7 +3,7 @@ using System.Reflection;
 using fences;
 using Spectre.Console.Cli;
 
-var programInfo = ProgramInfo.FromAssembly(Assembly.GetExecutingAssembly());
+var programInfo = AppInfo.FromAssembly(Assembly.GetExecutingAssembly());
 
 var app = new CommandApp<InfoCommand>();
 
