@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Reflection;
 using fences;
+using fences.Helpers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;

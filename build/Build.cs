@@ -20,6 +20,8 @@ using System.IO;
 
 class Build : NukeBuild
 {
+    const string RepositoryUrl = "https://github.com/bartoszlenar/dotnet-fences";
+
     static readonly DateTimeOffset BuildTime = DateTimeOffset.UtcNow;
 
     public static int Main() => Execute<Build>(x => x.BuildRelease);
@@ -95,7 +97,8 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration.Release)
                 .SetProjectFile(FenceProjectFilePath)
                 .SetTreatWarningsAsErrors(true)
-                .SetVersion(Version));
+                .SetVersion(Version)
+                .AddProperty("RepositoryUrl", RepositoryUrl));
         })
         .Unlisted();
 
@@ -109,6 +112,7 @@ class Build : NukeBuild
                 .EnableNoBuild()
                 .SetProject(FenceProjectFilePath)
                 .SetOutputDirectory(BuildArtifactsDirectory)
+                .SetRepositoryUrl(RepositoryUrl)
                 .SetProperty("PackageVersion", Version)
             );
         });

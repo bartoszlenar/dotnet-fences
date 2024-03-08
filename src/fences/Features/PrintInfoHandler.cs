@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Globalization;
+using fences.Helpers;
 using MediatR;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -25,15 +26,13 @@ class PrintInfoHandler : IRequestHandler<PrintInfoRequest, int>
 
     public Task<int> Handle(PrintInfoRequest request, CancellationToken cancellationToken)
     {
+
+
         AnsiConsole.Write(new FigletText(_appInfo.Name).LeftJustified());
         AnsiConsole.WriteLine("version: " + _appInfo.Version);
         AnsiConsole.WriteLine("commit: " + _appInfo.Commit);
-
-        if (request.Verbose)
-        {
-            AnsiConsole.WriteLine("full version: " + _appInfo.FullVersion);
-            AnsiConsole.WriteLine("build time: " + _appInfo.BuildTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
-        }
+        AnsiConsole.WriteLine("repository url: " + _appInfo.RepositoryUrl);
+        AnsiConsole.WriteLine("build time: " + _appInfo.BuildTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
 
         return Task.FromResult(0);
     }

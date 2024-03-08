@@ -1,3 +1,5 @@
+namespace fences.Helpers.AssemblyAttributes;
+
 using System.Globalization;
 
 [AttributeUsage(AttributeTargets.Assembly)]
