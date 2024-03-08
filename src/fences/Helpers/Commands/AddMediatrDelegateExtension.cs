@@ -1,9 +1,9 @@
 using MediatR;
 using Spectre.Console.Cli;
 
-namespace fences;
+namespace fences.Helpers.Commands;
 
-public static class AddMediatrDelegateExtension
+public static class AddMediatrFeatureExtensions
 {
     public static ICommandConfigurator AddMediatrFeature<TCommand>(this IConfigurator<CommandSettings> configurator, IMediator mediator, string name) where TCommand : CommandSettings, IRequest<int>
     {

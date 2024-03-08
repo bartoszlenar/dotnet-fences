@@ -1,12 +1,13 @@
 using System.ComponentModel;
 using System.Globalization;
 using fences.Helpers;
+using fences.Helpers.Commands;
 using MediatR;
 using Spectre.Console;
 using Spectre.Console.Cli;
 
 
-public sealed class PrintInfoRequest : CommandSettings, IRequest<int>
+public sealed class PrintInfoRequest : FeatureRequest
 {
     [CommandOption("--verbose")]
     [Description("Display verbose information")]
@@ -14,7 +15,7 @@ public sealed class PrintInfoRequest : CommandSettings, IRequest<int>
     public bool Verbose { get; set; }
 }
 
-class PrintInfoHandler : IRequestHandler<PrintInfoRequest, int>
+class PrintInfoHandler : IFeatureHandler
 {
     private readonly AppInfo _appInfo;
 
@@ -26,8 +27,6 @@ class PrintInfoHandler : IRequestHandler<PrintInfoRequest, int>
 
     public Task<int> Handle(PrintInfoRequest request, CancellationToken cancellationToken)
     {
-
-
         AnsiConsole.Write(new FigletText(_appInfo.Name).LeftJustified());
         AnsiConsole.WriteLine("version: " + _appInfo.Version);
         AnsiConsole.WriteLine("commit: " + _appInfo.Commit);
