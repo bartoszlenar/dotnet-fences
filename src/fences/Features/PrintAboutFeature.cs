@@ -3,20 +3,19 @@ using fences.Helpers;
 using fences.Helpers.Commands;
 using Spectre.Console;
 
-
 public sealed class PrintAboutRequest : FeatureRequest
 {
 }
 
-class PrintInfoHandler : IFeatureHandler
+class PrintAboutFeature : IFeatureHandler
 {
+
     private readonly AppInfo _appInfo;
 
-    public PrintInfoHandler(AppInfo appInfo)
+    public PrintAboutFeature(AppInfo appInfo)
     {
         _appInfo = appInfo;
     }
-
 
     public Task<int> Handle(PrintAboutRequest request, CancellationToken cancellationToken)
     {
@@ -40,4 +39,6 @@ class PrintInfoHandler : IFeatureHandler
 
         return Task.FromResult(0);
     }
+
+
 }
