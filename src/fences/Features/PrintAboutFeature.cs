@@ -34,7 +34,8 @@ class PrintAboutFeature : IFeatureHandler
         table.AddRow("name:", _appInfo.Name);
         table.AddRow("version:", _appInfo.Version);
         table.AddRow("commit id:", _appInfo.Commit);
-        table.AddRow("repository url:", _appInfo.RepositoryUrl);
+        table.AddRow("project url:", _appInfo.ProjectUrl);
+        table.AddRow("author:", _appInfo.Author);
         table.AddRow("build time:", _appInfo.BuildTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
 
         AnsiConsole.Write(table);
@@ -49,6 +50,6 @@ public static class PrintAboutFeatureExtensions
     {
         return configurator
             .AddFeature<PrintAboutRequest>(mediator, "about")
-            .WithDescription("Prints detailed info about the application, its version and location.");
+            .WithDescription("Prints detailed info about the application.");
     }
 }

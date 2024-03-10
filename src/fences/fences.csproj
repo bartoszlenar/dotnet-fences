@@ -8,6 +8,11 @@
     <PackAsTool>true</PackAsTool>
     <PackageId>dotnet-fences</PackageId>
     <ToolCommandName>dotnet-fences</ToolCommandName>
+    <Authors>Bartosz Lenar</Authors>
+    <PackageProjectUrl>https://github.com/bartoszlenar/dotnet-fences</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/bartoszlenar/dotnet-fences.git</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
@@ -18,8 +23,11 @@
     <AssemblyAttribute Include="fences.Helpers.AssemblyAttributes.BuildTimeAttribute">
       <_Parameter1>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</_Parameter1>
     </AssemblyAttribute>
-    <AssemblyAttribute Include="fences.Helpers.AssemblyAttributes.RepositoryUrlAttribute">
-      <_Parameter1>$(RepositoryUrl)</_Parameter1>
+    <AssemblyAttribute Include="fences.Helpers.AssemblyAttributes.AuthorsAttribute">
+      <_Parameter1>Bartosz Lenar (bartosz@lenar.dev)</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="fences.Helpers.AssemblyAttributes.ProjectUrlAttribute">
+      <_Parameter1>https://github.com/bartoszlenar/dotnet-fences</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
