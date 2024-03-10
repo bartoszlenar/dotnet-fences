@@ -44,8 +44,7 @@ class App
             config.SetApplicationName(appInfo.Name);
             config.SetApplicationVersion(appInfo.Version);
 
-            config.AddFeature<PrintAboutRequest>(mediator, "about")
-                .WithDescription("Prints detailed info about the application.");
+            config.AddPrintAboutFeature("about", mediator);
         });
     }
 

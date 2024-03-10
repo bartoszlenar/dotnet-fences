@@ -1,7 +1,9 @@
 using System.Globalization;
 using fences.Helpers;
 using fences.Helpers.Commands;
+using MediatR;
 using Spectre.Console;
+using Spectre.Console.Cli;
 
 public sealed class PrintAboutRequest : FeatureRequest
 {
@@ -39,6 +41,14 @@ class PrintAboutFeature : IFeatureHandler
 
         return Task.FromResult(0);
     }
+}
 
-
+public static class PrintAboutFeatureExtensions
+{
+    public static ICommandConfigurator AddPrintAboutFeature(this IConfigurator configurator, string name, IMediator mediator)
+    {
+        return configurator
+            .AddFeature<PrintAboutRequest>(mediator, "about")
+            .WithDescription("Prints detailed info about the application, its version and location.");
+    }
 }
