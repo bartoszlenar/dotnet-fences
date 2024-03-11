@@ -1,4 +1,5 @@
-using System.Globalization;
+namespace fences.Features;
+
 using fences.Helpers;
 using fences.Helpers.Commands;
 using MediatR;
@@ -32,7 +33,7 @@ class RunFeature : IFeatureHandler<RunRequest>
     }
 }
 
-public static class RunFeatureExtensions
+static class RunFeatureExtensions
 {
     public static ICommandConfigurator AddRunFeature(this IConfigurator configurator, string name, IMediator mediator)
     {

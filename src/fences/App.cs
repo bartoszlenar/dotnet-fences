@@ -1,14 +1,14 @@
+namespace fences;
+
+using fences.Features;
 using fences.Helpers;
-using fences.Helpers.Commands;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 
-namespace fences;
-
 class App
 {
-    private static IServiceCollection GetDefaultServiceCollection()
+    private static ServiceCollection GetDefaultServiceCollection()
     {
         var appInfo = AppInfo.FromAssembly(typeof(App).Assembly);
 
@@ -20,7 +20,7 @@ class App
         return services;
     }
 
-    public static App Create(Func<IServiceCollection, IServiceCollection>? configureServices = null)
+    public static App Create(Func<ServiceCollection, ServiceCollection>? configureServices = null)
     {
         var services = GetDefaultServiceCollection();
 
@@ -49,7 +49,7 @@ class App
         });
     }
 
-    private ICommandApp _commandApp;
+    private CommandApp _commandApp;
 
     public Task<int> Run(IEnumerable<string> args)
     {

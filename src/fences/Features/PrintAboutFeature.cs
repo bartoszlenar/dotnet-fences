@@ -1,3 +1,5 @@
+namespace fences.Features;
+
 using System.Globalization;
 using fences.Helpers;
 using fences.Helpers.Commands;
@@ -44,7 +46,7 @@ class PrintAboutFeature : IFeatureHandler<PrintAboutRequest>
     }
 }
 
-public static class PrintAboutFeatureExtensions
+static class PrintAboutFeatureExtensions
 {
     public static ICommandConfigurator AddPrintAboutFeature(this IConfigurator configurator, string name, IMediator mediator)
     {

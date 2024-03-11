@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackAsTool>true</PackAsTool>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <AnalysisMode>All</AnalysisMode>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageId>dotnet-fences</PackageId>
     <ToolCommandName>dotnet-fences</ToolCommandName>
     <Authors>Bartosz Lenar</Authors>
@@ -13,7 +18,6 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/bartoszlenar/dotnet-fences.git</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup>
