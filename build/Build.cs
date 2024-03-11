@@ -98,8 +98,7 @@ class Build : NukeBuild
                 .SetProjectFile(FenceProjectFilePath)
                 .SetTreatWarningsAsErrors(true)
                 .SetVersion(Version)
-                .AddProperty("RepositoryUrl", RepositoryUrl)
-                .AddProperty("Authors", Authors));
+                .AddProperty("RepositoryUrl", RepositoryUrl));
         })
         .Unlisted();
 
