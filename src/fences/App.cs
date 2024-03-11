@@ -45,10 +45,11 @@ class App
             config.SetApplicationVersion(appInfo.Version);
 
             config.AddPrintAboutFeature("about", mediator);
+            config.AddRunFeature("run", mediator);
         });
     }
 
-    private CommandApp _commandApp;
+    private ICommandApp _commandApp;
 
     public Task<int> Run(IEnumerable<string> args)
     {
