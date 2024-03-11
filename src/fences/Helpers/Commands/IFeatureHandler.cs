@@ -2,4 +2,4 @@ namespace fences.Helpers.Commands;
 
 using MediatR;
 
-interface IFeatureHandler : IRequestHandler<PrintAboutRequest, int> { }
+interface IFeatureHandler<T> : IRequestHandler<T, int> where T : FeatureRequest { }

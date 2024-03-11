@@ -3,7 +3,7 @@ using Spectre.Console.Cli;
 
 namespace fences.Helpers.Commands;
 
-public static class AddFeatureExtensions
+static class AddFeatureExtensions
 {
     public static ICommandConfigurator AddFeature<TCommand>(this IConfigurator configurator, IMediator mediator, string name) where TCommand : CommandSettings, IRequest<int>
     {

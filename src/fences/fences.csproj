@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackAsTool>true</PackAsTool>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <AnalysisMode>All</AnalysisMode>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PackageId>dotnet-fences</PackageId>
     <ToolCommandName>dotnet-fences</ToolCommandName>
     <Authors>Bartosz Lenar</Authors>
@@ -13,13 +18,15 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/bartoszlenar/dotnet-fences.git</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>fences.Tests</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
     <AssemblyAttribute Include="fences.Helpers.AssemblyAttributes.BuildTimeAttribute">
       <_Parameter1>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</_Parameter1>
     </AssemblyAttribute>

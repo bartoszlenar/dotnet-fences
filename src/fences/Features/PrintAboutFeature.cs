@@ -1,3 +1,5 @@
+namespace fences.Features;
+
 using System.Globalization;
 using fences.Helpers;
 using fences.Helpers.Commands;
@@ -9,7 +11,7 @@ public sealed class PrintAboutRequest : FeatureRequest
 {
 }
 
-class PrintAboutFeature : IFeatureHandler
+class PrintAboutFeature : IFeatureHandler<PrintAboutRequest>
 {
 
     private readonly AppInfo _appInfo;
@@ -34,9 +36,9 @@ class PrintAboutFeature : IFeatureHandler
         table.AddRow("name:", _appInfo.Name);
         table.AddRow("version:", _appInfo.Version);
         table.AddRow("commit id:", _appInfo.Commit);
+        table.AddRow("build time:", _appInfo.BuildTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
         table.AddRow("project url:", _appInfo.ProjectUrl);
         table.AddRow("author:", _appInfo.Author);
-        table.AddRow("build time:", _appInfo.BuildTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
 
         AnsiConsole.Write(table);
 
@@ -44,7 +46,7 @@ class PrintAboutFeature : IFeatureHandler
     }
 }
 
-public static class PrintAboutFeatureExtensions
+static class PrintAboutFeatureExtensions
 {
     public static ICommandConfigurator AddPrintAboutFeature(this IConfigurator configurator, string name, IMediator mediator)
     {
