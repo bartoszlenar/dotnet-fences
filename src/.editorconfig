@@ -438,6 +438,13 @@ roslynator_compiler_diagnostic_fixes.enabled = true
 # Enable/disable specific compiler diagnostic fix
 #roslynator_compiler_diagnostic_fix.<COMPILER_DIAGNOSTIC_ID>.enabled = true|false
 
+
+##########################################
+# StyleCop
+##########################################
+
+dotnet_diagnostic.SA1633.severity = none # File should have header
+
 ##########################################
 # License
 ##########################################
@@ -472,3 +479,6 @@ roslynator_compiler_diagnostic_fixes.enabled = true
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
