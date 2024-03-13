@@ -35,10 +35,7 @@ class RunFeature : IFeatureHandler<RunRequest>
 
 static class RunFeatureExtensions
 {
-    public static ICommandConfigurator AddRunFeature(this IConfigurator configurator, string name, IMediator mediator)
-    {
-        return configurator
+    public static ICommandConfigurator AddRunFeature(this IConfigurator configurator, string name, IMediator mediator) => configurator
             .AddFeature<RunRequest>(mediator, "run")
             .WithDescription("Run the processing in the specified path.");
-    }
 }
