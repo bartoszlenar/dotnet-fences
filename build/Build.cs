@@ -55,6 +55,33 @@ class Build : NukeBuild
         Serilog.Log.Information($"Version: {Version}");
     }
 
+    Target Outdated => _ => _
+       .Description("Upgrades all outdated dependencies.")
+       .Executes(() =>
+       {
+           var tool = GetTool("dotnet-outdated-tool", "4.6.0", "dotnet-outdated.dll", "net8.0");
+
+           var outdatedReportsDirectory = ArtifactsDirectory / "outdated-reports";
+
+           if (!outdatedReportsDirectory.Exists())
+           {
+               outdatedReportsDirectory.CreateDirectory();
+           }
+
+           var toolParameters = new[]
+           {
+                (SourceDirectory / "dotnet-fences.sln").ToString(),
+                 "-o",
+                 $"{outdatedReportsDirectory / ("outdated." + BuildTime.ToString("yyyyMMdd_HHmmss", CultureInfo.InvariantCulture) + ".json") }",
+                 "-u",
+           };
+
+
+           ProcessTasks.StartProcess(ToolPathResolver.GetPathExecutable("dotnet"), tool + " " + toolParameters.JoinSpace()).AssertZeroExitCode();
+
+       })
+       .Triggers(Lock);
+
     Target Lock => _ => _
         .Description("Restore and re-lock the dependencies.")
         .DependsOn(Clean)
