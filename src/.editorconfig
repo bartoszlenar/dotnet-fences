@@ -443,6 +443,7 @@ roslynator_compiler_diagnostic_fixes.enabled = true
 # StyleCop
 ##########################################
 
+dotnet_diagnostic.SA1600.severity = none # Elements should be documented
 dotnet_diagnostic.SA1633.severity = none # File should have header
 
 ##########################################
