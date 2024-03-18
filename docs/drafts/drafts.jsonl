@@ -1,0 +1,12 @@
+// for root
+{
+    "root": true,
+}
+
+{
+    "root": false, // not-needed, root is false by default
+}
+
+{
+    "namespace": "This.Is.Namespace.ToHandle", // not-needed, namespace is current folder path relative to root by default
+}
