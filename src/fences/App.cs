@@ -2,7 +2,11 @@ namespace fences;
 
 using fences.Commands;
 using fences.Helpers;
+using fences.Helpers.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Sinks.Spectre;
+using Spectre.Console;
 using Spectre.Console.Cli;
 
 class App
@@ -14,6 +18,12 @@ class App
         var services = new ServiceCollection();
 
         services.AddSingleton(appInfo);
+
+        services.AddLogging(c => c
+            .AddSerilog(new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Spectre()
+                .CreateLogger()));
 
         return services;
     }
@@ -40,6 +50,7 @@ class App
 
             config.SetApplicationName(appInfo.Name);
             config.SetApplicationVersion(appInfo.Version);
+            config.SetInterceptor(new LogInterceptor());
             config.AddCommand<AboutCommand>("about");
             config.AddCommand<CheckCommand>("check");
         });
