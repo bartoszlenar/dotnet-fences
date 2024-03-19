@@ -10,3 +10,23 @@
 {
     "namespace": "This.Is.Namespace.ToHandle", // not-needed, namespace is current folder path relative to root by default
 }
+
+
+{
+    "public": [
+        "ClassName",
+        "InternalNamespace.InnerClassName", // namespace relative to the one in folder or in "namespace" field
+        "InternalNamespace", // error
+        "InternalNamespace.*", // all within namespace
+        "AnotherInternalNamespace.*Query", // all classes with Query suffix
+        "AnotherInternalNamespace.*Command", // all classes with Command suffix
+    ],
+}
+
+{
+    "private": [
+        "ClassName",
+        // same as with "public" but it's about classes that are not exposed to the public
+    ],
+
+}
