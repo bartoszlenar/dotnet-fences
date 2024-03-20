@@ -30,3 +30,8 @@
     ],
 
 }
+
+
+{
+    "tags": ["service", "commands"], // not-needed, tags are empty by default
+}
