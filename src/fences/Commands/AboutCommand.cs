@@ -8,6 +8,7 @@ using Spectre.Console.Cli;
 
 internal sealed class AboutCommand(AppInfo appInfo) : AsyncCommand
 {
+
     private readonly AppInfo appInfo = appInfo ?? throw new ArgumentNullException(nameof(appInfo));
 
     public override Task<int> ExecuteAsync(CommandContext context)
