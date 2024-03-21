@@ -3,27 +3,34 @@ namespace fences;
 using fences.Commands;
 using fences.Helpers;
 using fences.Helpers.Infrastructure;
+using fences.Injection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Sinks.Spectre;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 class App
 {
+
+    static AppInfo appInfo = AppInfo.FromAssembly(typeof(App).Assembly);
+
     private static ServiceCollection GetDefaultServiceCollection()
     {
-        var appInfo = AppInfo.FromAssembly(typeof(App).Assembly);
 
         var services = new ServiceCollection();
 
         services.AddSingleton(appInfo);
 
-        services.AddLogging(c => c
-            .AddSerilog(new LoggerConfiguration()
-                .MinimumLevel.Information()
+        services.AddLogging(builder =>
+        {
+            builder.AddSerilog(new LoggerConfiguration()
                 .WriteTo.Spectre()
-                .CreateLogger()));
+                .CreateLogger());
+        });
 
         return services;
     }
@@ -37,17 +44,17 @@ class App
             services = configureServices(services);
         }
 
-        return new App(services.BuildServiceProvider());
+        return new App(services);
     }
 
-    private App(ServiceProvider serviceProvider)
+    private App(ServiceCollection serviceCollection)
     {
-        _commandApp = new CommandApp<CheckCommand>();
+        var typeRegistrar = new TypeRegistrar(serviceCollection);
+
+        _commandApp = new CommandApp<CheckCommand>(typeRegistrar);
 
         _commandApp.Configure(config =>
         {
-            var appInfo = serviceProvider.GetRequiredService<AppInfo>();
-
             config.SetApplicationName(appInfo.Name);
             config.SetApplicationVersion(appInfo.Version);
             config.SetInterceptor(new LogInterceptor());

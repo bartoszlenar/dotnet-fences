@@ -9,9 +9,9 @@ using Spectre.Console.Cli;
 
 sealed class CheckCommand : AsyncCommand<CheckCommand.Settings>
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<CheckCommand> _logger;
 
-    public CheckCommand(ILogger logger)
+    public CheckCommand(ILogger<CheckCommand> logger)
     {
         _logger = logger;
     }
