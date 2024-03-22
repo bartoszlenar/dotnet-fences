@@ -1,6 +1,7 @@
-using FluentAssertions;
+namespace Fences.Tests;
 
-namespace fences.Tests;
+using Fences;
+using FluentAssertions;
 
 public class TestLogicTests
 {

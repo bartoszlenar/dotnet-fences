@@ -1,38 +1,34 @@
-namespace fences;
+namespace Fences;
 
-using fences.Commands;
-using fences.Helpers;
-using fences.Helpers.Infrastructure;
-using fences.Injection;
+using Fences.Commands;
+using Fences.Helpers;
+using Fences.Helpers.Logging;
+using Fences.Injection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Sinks.Spectre;
-using Spectre.Console;
 using Spectre.Console.Cli;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-class App
+public sealed class App
 {
+    private static readonly AppInfo AppInfo = AppInfo.FromAssembly(typeof(App).Assembly);
 
-    static AppInfo appInfo = AppInfo.FromAssembly(typeof(App).Assembly);
+    private readonly ICommandApp commandApp;
 
-    private static ServiceCollection GetDefaultServiceCollection()
+    private App(ServiceCollection serviceCollection)
     {
+        var typeRegistrar = new TypeRegistrar(serviceCollection);
 
-        var services = new ServiceCollection();
+        this.commandApp = new CommandApp<CheckCommand>(typeRegistrar);
 
-        services.AddSingleton(appInfo);
-
-        services.AddLogging(builder =>
+        this.commandApp.Configure(config =>
         {
-            builder.AddSerilog(new LoggerConfiguration()
-                .WriteTo.Spectre()
-                .CreateLogger());
+            config.SetApplicationName(AppInfo.Name);
+            config.SetApplicationVersion(AppInfo.Version);
+            config.SetInterceptor(new LogsInterceptor());
+            config.AddCommand<AboutCommand>("about");
+            config.AddCommand<CheckCommand>("check");
         });
-
-        return services;
     }
 
     public static App Create(Func<ServiceCollection, ServiceCollection>? configureServices = null)
@@ -47,27 +43,18 @@ class App
         return new App(services);
     }
 
-    private App(ServiceCollection serviceCollection)
+    public Task<int> Run(IEnumerable<string> args) => this.commandApp.RunAsync(args);
+
+    private static ServiceCollection GetDefaultServiceCollection()
     {
-        var typeRegistrar = new TypeRegistrar(serviceCollection);
+        var services = new ServiceCollection();
 
-        _commandApp = new CommandApp<CheckCommand>(typeRegistrar);
+        services.AddSingleton(AppInfo);
 
-        _commandApp.Configure(config =>
-        {
-            config.SetApplicationName(appInfo.Name);
-            config.SetApplicationVersion(appInfo.Version);
-            config.SetInterceptor(new LogInterceptor());
-            config.AddCommand<AboutCommand>("about");
-            config.AddCommand<CheckCommand>("check");
-        });
+        services.AddLogging(builder => builder.AddSerilog(new LoggerConfiguration()
+                .WriteTo.Spectre()
+                .CreateLogger()));
 
-    }
-
-    private ICommandApp _commandApp;
-
-    public Task<int> Run(IEnumerable<string> args)
-    {
-        return _commandApp.RunAsync(args);
+        return services;
     }
 }

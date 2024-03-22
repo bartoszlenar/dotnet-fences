@@ -1,16 +1,11 @@
 #pragma warning disable CA1019 // Define accessors for attribute arguments
 
-namespace fences.Helpers.AssemblyAttributes;
+namespace Fences.Helpers.AssemblyAttributes;
 
 using System.Globalization;
 
 [AttributeUsage(AttributeTargets.Assembly)]
-internal sealed class BuildTimeAttribute : Attribute
+internal sealed class BuildTimeAttribute(string buildTime) : Attribute
 {
-    public BuildTimeAttribute(string buildTime)
-    {
-        BuildTime = DateTimeOffset.ParseExact(buildTime, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None);
-    }
-
-    public DateTimeOffset BuildTime { get; }
+    public DateTimeOffset BuildTime { get; } = DateTimeOffset.ParseExact(buildTime, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None);
 }

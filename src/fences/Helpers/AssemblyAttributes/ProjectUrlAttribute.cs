@@ -1,12 +1,7 @@
-namespace fences.Helpers.AssemblyAttributes;
+namespace Fences.Helpers.AssemblyAttributes;
 
 [AttributeUsage(AttributeTargets.Assembly)]
-internal sealed class ProjectUrlAttribute : Attribute
+internal sealed class ProjectUrlAttribute(string projectUrl) : Attribute
 {
-    public ProjectUrlAttribute(string projectUrl)
-    {
-        ProjectUrl = !string.IsNullOrWhiteSpace(projectUrl) ? projectUrl : "(unknown)";
-    }
-
-    public string ProjectUrl { get; }
+    public string ProjectUrl { get; } = !string.IsNullOrWhiteSpace(projectUrl) ? projectUrl : "(unknown)";
 }

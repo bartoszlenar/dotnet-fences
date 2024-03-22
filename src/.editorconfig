@@ -414,38 +414,6 @@ dotnet_naming_rule.parameters_rule.symbols              = parameters_group
 dotnet_naming_rule.parameters_rule.style                = camel_case_style
 dotnet_naming_rule.parameters_rule.severity             = warning
 
-
-
-##########################################
-# Roslynator
-##########################################
-
-# Set severity for all analyzers that are enabled by default (https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2022#set-rule-severity-of-multiple-analyzer-rules-at-once-in-an-editorconfig-file)
-dotnet_analyzer_diagnostic.category-roslynator.severity = warning
-
-# Set severity for a specific analyzer
-# dotnet_diagnostic.<ANALYZER_ID>.severity = default|none|silent|suggestion|warning|error
-
-# Enable/disable all refactorings
-roslynator_refactorings.enabled = true
-
-# Enable/disable specific refactoring
-# roslynator_refactoring.<REFACTORING_NAME>.enabled = true|false
-
-# Enable/disable all compiler diagnostic fixes
-roslynator_compiler_diagnostic_fixes.enabled = true
-
-# Enable/disable specific compiler diagnostic fix
-#roslynator_compiler_diagnostic_fix.<COMPILER_DIAGNOSTIC_ID>.enabled = true|false
-
-
-##########################################
-# StyleCop
-##########################################
-
-dotnet_diagnostic.SA1600.severity = none # Elements should be documented
-dotnet_diagnostic.SA1633.severity = none # File should have header
-
 ##########################################
 # License
 ##########################################
@@ -481,5 +449,39 @@ dotnet_diagnostic.SA1633.severity = none # File should have header
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
 
-# SA1633: File should have header
-dotnet_diagnostic.SA1633.severity = none
+##########################################
+# Roslynator
+##########################################
+
+# Set severity for all analyzers that are enabled by default (https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2022#set-rule-severity-of-multiple-analyzer-rules-at-once-in-an-editorconfig-file)
+dotnet_analyzer_diagnostic.category-roslynator.severity = warning
+
+# Set severity for a specific analyzer
+# dotnet_diagnostic.<ANALYZER_ID>.severity = default|none|silent|suggestion|warning|error
+
+# Enable/disable all refactorings
+roslynator_refactorings.enabled = true
+
+# Enable/disable specific refactoring
+# roslynator_refactoring.<REFACTORING_NAME>.enabled = true|false
+
+# Enable/disable all compiler diagnostic fixes
+roslynator_compiler_diagnostic_fixes.enabled = true
+
+# Enable/disable specific compiler diagnostic fix
+#roslynator_compiler_diagnostic_fix.<COMPILER_DIAGNOSTIC_ID>.enabled = true|false
+
+##########################################
+# StyleCop
+##########################################
+
+dotnet_diagnostic.SA0001.severity = none # XML comment analysis is disabled
+dotnet_diagnostic.SA1600.severity = none # Elements should be documented
+dotnet_diagnostic.SA1633.severity = none # File should have header
+
+##########################################
+# Code Analysis
+##########################################
+
+dotnet_diagnostic.CA1848.severity = suggestion # Use the LoggerMessage delegates
+dotnet_diagnostic.CA1859.severity = suggestion # Use concrete types when possible for improved performance

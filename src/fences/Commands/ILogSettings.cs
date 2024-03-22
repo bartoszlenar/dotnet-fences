@@ -1,9 +1,6 @@
-namespace fences.Commands;
-
-using System.ComponentModel;
-using Spectre.Console.Cli;
+namespace Fences.Commands;
 
 internal interface ILogSettings
 {
-    public bool? IsLoggingEnabled { get; set; }
+    public bool IsLoggingEnabled { get; }
 }

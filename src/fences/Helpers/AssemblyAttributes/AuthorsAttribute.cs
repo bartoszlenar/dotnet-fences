@@ -1,12 +1,7 @@
-namespace fences.Helpers.AssemblyAttributes;
+namespace Fences.Helpers.AssemblyAttributes;
 
 [AttributeUsage(AttributeTargets.Assembly)]
-internal sealed class AuthorsAttribute : Attribute
+internal sealed class AuthorsAttribute(string author) : Attribute
 {
-    public AuthorsAttribute(string author)
-    {
-        Author = !string.IsNullOrWhiteSpace(author) ? author : "(unknown)";
-    }
-
-    public string Author { get; }
+    public string Author { get; } = !string.IsNullOrWhiteSpace(author) ? author : "(unknown)";
 }
