@@ -1,4 +1,4 @@
-﻿using fences;
+﻿using Fences;
 
 var app = App.Create();
 

@@ -1,30 +1,25 @@
-namespace fences.Injection;
+namespace Fences.Injection;
 
 using System;
 using Spectre.Console.Cli;
 
-public sealed class TypeResolver : ITypeResolver, IDisposable
+public sealed class TypeResolver(IServiceProvider provider) : ITypeResolver, IDisposable
 {
-    private readonly IServiceProvider _provider;
+    private readonly IServiceProvider provider = provider ?? throw new ArgumentNullException(nameof(provider));
 
-    public TypeResolver(IServiceProvider provider)
+    public object? Resolve(Type? type)
     {
-        _provider = provider ?? throw new ArgumentNullException(nameof(provider));
-    }
-
-    public object Resolve(Type type)
-    {
-        if (type == null)
+        if (type is null)
         {
             return null;
         }
 
-        return _provider.GetService(type);
+        return this.provider.GetService(type);
     }
 
     public void Dispose()
     {
-        if (_provider is IDisposable disposable)
+        if (this.provider is IDisposable disposable)
         {
             disposable.Dispose();
         }

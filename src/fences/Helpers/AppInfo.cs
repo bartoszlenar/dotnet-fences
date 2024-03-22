@@ -1,9 +1,9 @@
-namespace fences.Helpers;
+namespace Fences.Helpers;
 
 using System.Reflection;
-using fences.Helpers.AssemblyAttributes;
+using Fences.Helpers.AssemblyAttributes;
 
-record AppInfo(string Name, string FullVersion, string Version, string Commit, DateTimeOffset BuildTime, string ProjectUrl, string Author)
+internal record AppInfo(string Name, string FullVersion, string Version, string Commit, DateTimeOffset BuildTime, string ProjectUrl, string Author)
 {
     public static AppInfo FromAssembly(Assembly assembly)
     {
