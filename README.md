@@ -53,10 +53,10 @@
 
 ### Versioning
 
-[Semantic versioning](https://semver.org/) is being used very strictly. The major version is updated only when there is a breaking change, no matter how small it might be (e.g., adding extra method to the public interface). On the other hand, a huge pack of new features will bump the minor version only.
+[Semantic versioning](https://semver.org/) is being used very strictly. The major version is updated only when there is a breaking change, no matter how small it might be (e.g., a small change in behavior or modified console output that is supposed to be parseable). On the other hand, a huge pack of new features will bump the minor version only.
 
 Before every major version update, at least one preview version is published.
 
 ### Licencing
 
-Validot uses the [MIT license](../LICENSE). Long story short; you are more than welcome to use it anywhere you like, completely free of charge and without oppressive obligations.
+Project uses the [MIT license](../LICENSE). Long story short; you are more than welcome to use it anywhere you like, completely free of charge and without oppressive obligations. See the [TLDR](https://www.tldrlegal.com/license/mit-license) if you are interested in more legal analysis.
