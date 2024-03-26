@@ -20,5 +20,9 @@ internal sealed class CreateCommand : AsyncCommand<CreateCommand.Settings>
         [CommandArgument(0, "[path]")]
         [DefaultValue(".")]
         public string Path { get; init; } = ".";
+
+        [CommandOption("-r|--root")]
+        [DefaultValue(false)]
+        public bool IsRoot { get; init; }
     }
 }
