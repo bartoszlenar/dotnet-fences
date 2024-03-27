@@ -13,21 +13,24 @@ public sealed class App
 {
     private static readonly AppInfo AppInfo = AppInfo.FromAssembly(typeof(App).Assembly);
 
+    private static readonly LogsInterceptor LogsInterceptor = new();
+
     private readonly ICommandApp commandApp;
 
     private App(ServiceCollection serviceCollection)
     {
         var typeRegistrar = new TypeRegistrar(serviceCollection);
 
-        this.commandApp = new CommandApp<CheckCommand>(typeRegistrar);
+        this.commandApp = new CommandApp<RunCommand>(typeRegistrar);
 
         this.commandApp.Configure(config =>
         {
             config.SetApplicationName(AppInfo.Name);
             config.SetApplicationVersion(AppInfo.Version);
-            config.SetInterceptor(new LogsInterceptor());
+            config.SetInterceptor(LogsInterceptor);
             config.AddCommand<AboutCommand>("about");
             config.AddCommand<CheckCommand>("check");
+            config.AddCommand<RunCommand>("run");
         });
     }
 
