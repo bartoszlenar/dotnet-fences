@@ -27,8 +27,8 @@ internal static class DebuggerAwaiter
         AnsiConsole.Markup(CultureInfo.InvariantCulture, "[yellow]Waiting for debugger to attach to process [bold]{0}[/][/]", Environment.ProcessId);
 
         var i = 0;
-        var dotOnEveryStep = 4;
-        var stepInMilliseconds = 500;
+        const int dotOnEveryStep = 4;
+        const int stepInMilliseconds = 500;
 
         while (!Debugger.IsAttached)
         {
