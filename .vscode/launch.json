@@ -3,5 +3,36 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
-  "configurations": []
+  "configurations": [
+    {
+      "name": "fences: attach",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickProcess}"
+    },
+    {
+      "name": "fences: build and debug",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build for debugging",
+      "program": "${workspaceFolder}/src/fences/bin/Debug/net8.0/fences.dll",
+      "args": ["${input:dotnetArgs}"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "fences: debug",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/fences/bin/Debug/net8.0/fences.dll",
+      "args": ["${input:dotnetArgs}"],
+      "console": "integratedTerminal"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dotnetArgs",
+      "type": "promptString",
+      "description": "Enter the command line arguments"
+    }
+  ]
 }

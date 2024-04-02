@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build for debugging",
+      "type": "shell",
+      "command": "./build.sh",
+      "args": ["--target", "BuildDebug", "--allow-warnings"],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "echo": true,
+        "panel": "dedicated"
+      },
+    }
+  ]
+}
