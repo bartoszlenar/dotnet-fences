@@ -54,16 +54,11 @@ public sealed class App
 
         services.AddSingleton(AppInfo);
 
-        if (LogsInterceptor.IsLoggingEnabled)
-        {
-            services.AddLogging(builder => builder.AddSerilog(new LoggerConfiguration()
+        services.AddLogging(builder => builder.AddSerilog(new LoggerConfiguration()
+                    .Filter.ByExcluding(_ => !LogsInterceptor.IsLoggingEnabled)
+                    .MinimumLevel.Verbose()
                     .WriteTo.Spectre()
                     .CreateLogger()));
-        }
-        else
-        {
-            services.AddLogging();
-        }
 
         return services;
     }
