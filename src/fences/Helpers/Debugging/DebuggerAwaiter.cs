@@ -8,19 +8,21 @@ internal static class DebuggerAwaiter
 {
     public static string WaitForDebuggerFlag => "--debug";
 
-    public static bool ShouldWaitForDebugger(IReadOnlyCollection<string> args) => args.Contains(WaitForDebuggerFlag, StringComparer.OrdinalIgnoreCase);
-
     public static bool IsDebugBuild
     {
         get
         {
 #if DEBUG
+#pragma warning disable IDE0025 // Use expression body for property
             return true;
+#pragma warning restore IDE0025 // Use expression body for property
 #else
             return false;
 #endif
         }
     }
+
+    public static bool ShouldWaitForDebugger(IReadOnlyCollection<string> args) => args.Contains(WaitForDebuggerFlag, StringComparer.OrdinalIgnoreCase);
 
     public static async Task WaitForDebugger()
     {
