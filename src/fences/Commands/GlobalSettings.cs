@@ -5,7 +5,7 @@ using Spectre.Console.Cli;
 
 public class GlobalSettings : CommandSettings, ILogSettings
 {
-    [CommandOption("-l|--logs")]
+    [CommandOption("--logs")]
     [Description("Enable detailed logging")]
     [DefaultValue(false)]
     public bool IsLoggingEnabled { get; set; }
