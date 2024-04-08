@@ -31,6 +31,7 @@ public sealed class App
             config.AddCommand<AboutCommand>("about");
             config.AddCommand<CheckCommand>("check");
             config.AddCommand<RunCommand>("run");
+            config.AddCommand<CreateCommand>("create");
         });
     }
 
