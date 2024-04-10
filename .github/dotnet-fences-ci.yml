@@ -3,19 +3,19 @@ name: dotnet fences ci
 on:
   push:
     branches-ignore:
-      - 'wip/**'
+      - "wip/**"
   pull_request:
     branches-ignore:
-      - 'wip/**'
+      - "wip/**"
   release:
-      types: [published]
+    types: [published]
 
 jobs:
   build:
     strategy:
-        matrix:
-          os: [macos-latest, windows-latest, ubuntu-latest]
-          dotnet: ['8.0.x', '9.0.100-preview.2.24157.14']
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        dotnet: ["8.0.x"]
     runs-on: ${{ matrix.os }}
     name: Build on ${{ matrix.os }} using dotnet ${{ matrix.dotnet }}
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version:  |
+          dotnet-version: |
             8.0.x
             ${{ matrix.dotnet }}
       - name: Build
