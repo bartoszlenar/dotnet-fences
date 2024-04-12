@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, windows-latest, ubuntu-latest]
-        dotnet: ["8.0.x"]
+        dotnet: ["8.0.x", "9.0.x"]
     runs-on: ${{ matrix.os }}
     name: Build on ${{ matrix.os }} using dotnet ${{ matrix.dotnet }}
     steps:
