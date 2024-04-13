@@ -9,12 +9,12 @@ using Spectre.Console.Cli;
 
 internal sealed class RunCommand(ILogger<RunCommand> logger) : AsyncCommand<RunCommand.Settings>
 {
-    private readonly ILogger<RunCommand> logger = logger;
+    private readonly ILogger<RunCommand> _logger = logger;
 
     public override Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        this.logger.LogInformation("Current directory: {CurrentDirectory}", Environment.CurrentDirectory);
-        this.logger.LogInformation("Path: {Path}", settings.Path);
+        _logger.LogInformation("Current directory: {CurrentDirectory}", Environment.CurrentDirectory);
+        _logger.LogInformation("Path: {Path}", settings.Path);
 
         AnsiConsole.Write("Running at path: " + Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, settings.Path)));
 
