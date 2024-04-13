@@ -5,7 +5,7 @@ using Spectre.Console.Cli;
 
 public sealed class TypeResolver(IServiceProvider provider) : ITypeResolver, IDisposable
 {
-    private readonly IServiceProvider provider = provider ?? throw new ArgumentNullException(nameof(provider));
+    private readonly IServiceProvider _provider = provider ?? throw new ArgumentNullException(nameof(provider));
 
     public object? Resolve(Type? type)
     {
@@ -14,12 +14,12 @@ public sealed class TypeResolver(IServiceProvider provider) : ITypeResolver, IDi
             return null;
         }
 
-        return this.provider.GetService(type);
+        return this._provider.GetService(type);
     }
 
     public void Dispose()
     {
-        if (this.provider is IDisposable disposable)
+        if (this._provider is IDisposable disposable)
         {
             disposable.Dispose();
         }

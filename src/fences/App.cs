@@ -15,15 +15,15 @@ public sealed class App
 
     private static readonly LogsInterceptor LogsInterceptor = new();
 
-    private readonly ICommandApp commandApp;
+    private readonly ICommandApp _commandApp;
 
     private App(ServiceCollection serviceCollection)
     {
         var typeRegistrar = new TypeRegistrar(serviceCollection);
 
-        this.commandApp = new CommandApp<RunCommand>(typeRegistrar);
+        _commandApp = new CommandApp<RunCommand>(typeRegistrar);
 
-        this.commandApp.Configure(config =>
+        _commandApp.Configure(config =>
         {
             config.SetApplicationName(AppInfo.Name);
             config.SetApplicationVersion(AppInfo.Version);
@@ -47,7 +47,7 @@ public sealed class App
         return new App(services);
     }
 
-    public Task<int> Run(IEnumerable<string> args) => this.commandApp.RunAsync(args);
+    public Task<int> Run(IEnumerable<string> args) => _commandApp.RunAsync(args);
 
     private static ServiceCollection GetDefaultServiceCollection()
     {

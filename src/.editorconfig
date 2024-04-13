@@ -81,10 +81,10 @@ dotnet_analyzer_diagnostic.severity = warning
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/language-rules#net-style-rules
 [*.{cs,csx,cake,vb,vbx}]
 # "this." and "Me." qualifiers
-dotnet_style_qualification_for_field = true:warning
-dotnet_style_qualification_for_property = true:warning
-dotnet_style_qualification_for_method = true:warning
-dotnet_style_qualification_for_event = true:warning
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
 # Language keywords instead of framework type names for type references
 dotnet_style_predefined_type_for_locals_parameters_members = true:warning
 dotnet_style_predefined_type_for_member_access = true:warning
@@ -510,7 +510,9 @@ roslynator_compiler_diagnostic_fixes.enabled = true
 dotnet_diagnostic.SA0001.severity = none # XML comment analysis is disabled
 dotnet_diagnostic.SA1309.severity = none # Field names should begin with lower-case letter
 dotnet_diagnostic.SA1600.severity = none # Elements should be documented
+dotnet_diagnostic.SA1101.severity = none # Prefix local calls with 'this' or 'Me'
 dotnet_diagnostic.SA1633.severity = none # File should have header
+
 
 ##########################################
 # Code Analysis
@@ -519,3 +521,9 @@ dotnet_diagnostic.SA1633.severity = none # File should have header
 dotnet_diagnostic.CA1848.severity = suggestion # Use the LoggerMessage delegates
 dotnet_diagnostic.CA1859.severity = suggestion # Use concrete types when possible for improved performance
 dotnet_diagnostic.CA2007.severity = none # Consider calling ConfigureAwait on the awaited task
+
+##########################################
+# Code Style
+##########################################
+
+dotnet_diagnostic.CS1591.severity = suggestion # Missing XML comment for publicly visible type or member

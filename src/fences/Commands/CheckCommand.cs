@@ -9,12 +9,12 @@ using Spectre.Console.Cli;
 
 internal sealed class CheckCommand(ILogger<CheckCommand> logger) : AsyncCommand<CheckCommand.Settings>
 {
-    private readonly ILogger<CheckCommand> logger = logger;
+    private readonly ILogger<CheckCommand> _logger = logger;
 
     public override Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        this.logger.LogInformation("Current directory: {CurrentDirectory}", Environment.CurrentDirectory);
-        this.logger.LogInformation("Path: {Path}", settings.Path);
+        _logger.LogInformation("Current directory: {CurrentDirectory}", Environment.CurrentDirectory);
+        _logger.LogInformation("Path: {Path}", settings.Path);
 
         AnsiConsole.Write("Checking path: " + Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, settings.Path)));
 
