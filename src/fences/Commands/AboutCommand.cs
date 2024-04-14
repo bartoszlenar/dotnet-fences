@@ -12,7 +12,7 @@ internal sealed class AboutCommand(AppInfo appInfo) : AsyncCommand
 
     public override Task<int> ExecuteAsync(CommandContext context)
     {
-        AnsiConsole.Write(new FigletText(this._appInfo.Name).LeftJustified());
+        AnsiConsole.Write(new FigletText(_appInfo.Name).LeftJustified());
 
         var table = new Table
         {
@@ -24,12 +24,12 @@ internal sealed class AboutCommand(AppInfo appInfo) : AsyncCommand
         table.Columns[0].PadRight(3);
         table.HideHeaders();
 
-        table.AddRow("name:", this._appInfo.Name);
-        table.AddRow("version:", this._appInfo.Version);
-        table.AddRow("commit id:", this._appInfo.Commit);
-        table.AddRow("build time:", this._appInfo.BuildTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
-        table.AddRow("project url:", this._appInfo.ProjectUrl);
-        table.AddRow("author:", this._appInfo.Author);
+        table.AddRow("name:", _appInfo.Name);
+        table.AddRow("version:", _appInfo.Version);
+        table.AddRow("commit id:", _appInfo.Commit);
+        table.AddRow("build time:", _appInfo.BuildTime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
+        table.AddRow("project url:", _appInfo.ProjectUrl);
+        table.AddRow("author:", _appInfo.Author);
 
         AnsiConsole.Write(table);
 

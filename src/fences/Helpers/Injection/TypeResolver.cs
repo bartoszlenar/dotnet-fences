@@ -14,12 +14,12 @@ public sealed class TypeResolver(IServiceProvider provider) : ITypeResolver, IDi
             return null;
         }
 
-        return this._provider.GetService(type);
+        return _provider.GetService(type);
     }
 
     public void Dispose()
     {
-        if (this._provider is IDisposable disposable)
+        if (_provider is IDisposable disposable)
         {
             disposable.Dispose();
         }
