@@ -1,6 +1,6 @@
 <h1 align="center">
   <br />
-    <img src="assets/logo/dotnet-fences-logo.svg" height="256px" width="256px" />
+    <img src="assets/logo/dotnet-fences-logo.png" height="256px" width="256px" />
   <br />
   dotnet-fences
   <br />
